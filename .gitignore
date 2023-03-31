@@ -1,0 +1,70 @@
+# Visual Studio files
+*.user
+*.suo
+*.cache
+*.ncb
+*.aps
+*.pdb
+*.obj
+*.dll
+*.exe
+*.res
+*.pch
+*.idb
+*.lib
+*.bak
+*.exp
+*.psess
+*.vsp
+*.vspx
+*.vsscc
+*.vssscc
+*.scc
+*.sln.docstates
+*.suo
+*.userosscache
+*.userprefs
+*.vst
+*.xaml.user
+
+# Resharper files
+_resharper*
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+[Bb]in/
+[Oo]bj/
+
+# NuGet Packages
+*.nupkg
+packages/
+
+# Folders
+$tf/
+.vs/
+.vscode/
+.git/
+*.vs/
+*.vscode/
+__pycache__/
+node_modules/
+bower_components/
+jspm_packages/
+
+# Other
+[Tt]humbs.db
+*.log
+*.cache
+*.bak
+*.userprefs
+*.orig
+*.bak.*
+*.old
+*.pidb
+*.zip
+*.cache
+
+.DC_Store
