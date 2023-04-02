@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using Serilog.Events;
 using Serilog.Formatting;
@@ -105,7 +106,21 @@ public class DefaultJsonFormatter : ITextFormatter
             WriteException(logEvent.Exception, ref delim, output);
 
         if (logEvent.Properties.Count != 0)
-            WriteProperties(logEvent.Properties, output);
+        {
+            var properties = logEvent.Properties.ToDictionary(p => p.Key, p => p.Value);
+            if (properties.ContainsKey("testDictionary"))
+            {
+                var readOnlyDictionary = new ReadOnlyDictionary<string, LogEventPropertyValue>
+                (
+                    new Dictionary<string, LogEventPropertyValue>
+                    {
+                        ["testDictionary"] = properties["testDictionary"]
+                    }
+                );
+
+                WriteProperties(readOnlyDictionary, output);
+            }
+        }
 
         var tokensWithFormat = logEvent.MessageTemplate.Tokens
             .OfType<PropertyToken>()

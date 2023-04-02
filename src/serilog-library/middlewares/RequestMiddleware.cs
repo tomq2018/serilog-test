@@ -6,6 +6,7 @@ using Serilog.Extensions.Hosting;
 using Serilog.Parsing;
 using System.Diagnostics;
 using Serilog;
+using System.Linq;
 
 namespace serilog_library.middlewares;
 
@@ -77,6 +78,23 @@ public class RequestMiddleware
 
         // Last-in (correctly) wins...
         var properties = collectedProperties.Concat(_getMessageTemplateProperties(httpContext, GetPath(httpContext, _includeQueryInRequestPath), elapsedMs, statusCode));
+
+        var propertiesDictionary = new Dictionary<string, string>
+        {
+            ["key1"] = "value1",
+            ["key2"] = "value2"
+        };
+
+        var kvpList = propertiesDictionary
+            .Select(p => new KeyValuePair<ScalarValue, LogEventPropertyValue>(
+                new ScalarValue(p.Key), new ScalarValue(p.Value)))
+            .ToList();
+        var testDictionary = new LogEventProperty("testDictionary", new DictionaryValue(kvpList));
+
+        var a = new LogEventProperty("teststring", new ScalarValue("123"));
+
+        properties = properties.Append(a);
+        properties = properties.Append(testDictionary);
 
         var evt = new LogEvent(DateTimeOffset.Now, level, ex ?? collectedException, _messageTemplate, properties);
         logger.Write(evt);
