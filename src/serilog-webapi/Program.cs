@@ -46,8 +46,9 @@ app.MapControllers();
 
 var opts = app.Services.GetService<IOptions<RequestLoggingOptions>>()?.Value ?? new RequestLoggingOptions();
 
-app.UseMiddleware<RequestMiddleware>(opts);
 app.UseMiddleware<CustomMiddleware>();
+
+app.UseMiddleware<RequestMiddleware>(opts);
 
 
 app.Run();

@@ -44,6 +44,10 @@ public class RequestMiddleware
         var start = Stopwatch.GetTimestamp();
 
         var collector = _diagnosticContext.BeginCollection();
+
+        // var genergeId = Guid.NewGuid().ToString();
+
+        // _diagnosticContext.Set("GuidID", genergeId);
         try
         {
             await _next(httpContext);
@@ -92,7 +96,9 @@ public class RequestMiddleware
         var testDictionary = new LogEventProperty("testDictionary", new DictionaryValue(kvpList));
 
         var a = new LogEventProperty("teststring", new ScalarValue("123"));
+        // var b = new LogEventProperty("sessionID", new ScalarValue(new Guid().ToString()));
 
+        // properties = properties.Append(b);
         properties = properties.Append(a);
         properties = properties.Append(testDictionary);
 

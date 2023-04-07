@@ -7,10 +7,13 @@ namespace serilog_webapi.Controllers;
 public class TestController : ControllerBase
 {
     private readonly TestApi _testApi;
+    private readonly ILogger<TestController> _logger;
 
-    public TestController(TestApi testApi)
+    public TestController(TestApi testApi,
+        ILogger<TestController> logger)
     {
         _testApi = testApi;
+        _logger = logger;
     }
 
     [HttpGet()]
@@ -18,5 +21,12 @@ public class TestController : ControllerBase
     {
         // return Ok();
         return Ok(await _testApi.Get("tom"));
+    }
+
+    [HttpGet("test")]
+    public async Task<IActionResult> GetOk()
+    {
+        _logger.LogInformation("test");
+        return Ok();
     }
 }
